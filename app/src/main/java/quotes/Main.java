@@ -6,23 +6,22 @@ package quotes;
 
 import com.google.gson.Gson;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Main {
+
+
     public static void main(String[] args) throws IOException {
-        Gson gson = new Gson();
-        String path = "app/src/main/resources/recentquotes.json";
-        try (Reader reader = new FileReader(path)) {
-            RecentQuotes[] recentQuotes = gson.fromJson(reader, RecentQuotes[].class);
-            Random r= new Random();
-            int index = r.nextInt(recentQuotes.length);
-            System.out.println(recentQuotes[0]);
-        }catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+
     }
 }
+
