@@ -8,17 +8,21 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Random;
 
 
 class MainTest {
+  public static final   String path = "../app/src/test/resources/recentquotes.json";
+
     @Test
     public void testQuotes() {
         Gson gson = new Gson();
-        String path = "../app/src/test/resources/recentquotes.json";
         try (Reader reader = new FileReader(path)) {
             RecentQuotes[] recentQuotes = gson.fromJson(reader, RecentQuotes[].class);
             Random r= new Random();
@@ -36,4 +40,27 @@ class MainTest {
         }
     }
 
+    @Test
+    public void testReader() throws FileNotFoundException {
+        Reader reader = new FileReader(path);
+        Assertions.assertNotNull(
+                String.valueOf(reader)
+        );
+    }
+
+    @Test public void testAPI(){
+        String URL = "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
+        try {
+
+            URL url = new URL(URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            String quote = Main.printRandomFromAPI(connection).toString();
+            Assertions.assertNotEquals(quote,null);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            Assertions.assertTrue(false);
+        }
+
+    }
 }
